@@ -271,6 +271,7 @@
                         </div>
                     </div>
                 </div>
+          
                 
 <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
 <div class="modal-dialog" role="document">
@@ -290,13 +291,42 @@
                         <div class="row">
     <div class="col-md-12">
         <div class="card ">
+
             <div class="card-header">
+
+                @if (Session::has('status_success'))
+                    <div class="alert alert-success" role="alert">
+                        <p>{{ Session::get('status_success') }}</p>
+                    </div>
+                @endif
+
+                @if (Session::has('status_danger'))
+                    <div class="alert alert-danger" role="alert">
+                        <p>{{ Session::get('status_danger') }}</p>
+                    </div>
+                @endif
+
+                @if (Session::has('status_warning'))
+                    <div class="alert alert-warning" role="alert">
+                        <p>{{ Session::get('status_warning') }}</p>
+                    </div>
+                @endif
+
+                
+                @if ($errors->any())
+                    @foreach($errors->all() as $error)
+                    <div class="alert alert-danger" role="alert">
+                        <p>{{ $error }}</p>
+                    </div>
+                    @endforeach
+                @endif
+
                 <div class="row">
                     <div class="col-8">
                         <h4 class="card-title">Users</h4>
                     </div>
                     <div class="col-4 text-right">
-                        <a href="#" class="btn btn-sm btn-primary">Add user</a>
+                        <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">Add user</a>
                     </div>
                 </div>
             </div>
@@ -311,23 +341,27 @@
                             <th scope="col"></th>
                         </tr></thead>
                         <tbody>
-                                                                <tr>
-                                    <td>Admin Admin</td>
-                                    <td>
-                                        <a href="mailto:admin@white.com">admin@white.com</a>
-                                    </td>
-                                    <td>25/02/2020 09:11</td>
-                                    <td class="text-right">
-                                                                                        <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                                                                                <a class="dropdown-item" href="#">Edit</a>
-                                                                                                        </div>
-                                            </div>
-                                                                                </td>
-                                </tr>
+                            @foreach ($users as $user)
+                                
+                            <tr>
+                                <td>{{ $user->name }}</td>
+                                <td>
+                                    <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
+                                </td>
+                                <td>{{ $user->created_at }}</td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                            <a class="dropdown-item" href="{{ route('user.edit', $user->id) }} ">Edit</a>
+                                            <a class="dropdown-item" href="{{ route('user.delete', $user->id) }}">delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
                                                         </tbody>
                     </table>
                 </div>
@@ -341,10 +375,61 @@
                 </nav>
             </div>
         </div>
-        <div class="alert alert-danger">
-            <span>
-              <b> </b> This is a PRO feature!</span>
-          </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+                Adicionar Novo Usuário                
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <i class="tim-icons icon-simple-remove"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+      <div class="card">
+  <div class="card-body">
+    
+  <form class="form" method="post" action="{{ route('user.register') }}">
+    @csrf
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Full name">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" name="password_confirmation" class="form-control" placeholder="{{ __('Confirm New Password') }}" value="" required>
+    </div>
+      
+
+    </div>
+</div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Add User/button>
+</div>
+</form>
+    </div>
+  </div>
+</div>
+        
     </div>
 </div>
                 </div>
