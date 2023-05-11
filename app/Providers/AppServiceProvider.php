@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Notice;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('manage-users', function(){
             
             return auth()->user()->is_admin === 1;
+        });
+
+        Gate::define('belongs-to', function(User $user,Notice $new){
+            return auth()->user()->id === $new->user_id;
         });
     }
 }

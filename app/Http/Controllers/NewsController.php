@@ -6,6 +6,7 @@ use App\Http\Requests\NewsRequest;
 use App\Http\Requests\NewsUpdateRequest;
 use App\Models\Notice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class NewsController extends Controller
 {
@@ -57,7 +58,12 @@ class NewsController extends Controller
      */
     public function edit(string $id)
     {
+        
         $new = Notice::find($id);
+
+        if( Gate::denies('belongs-to', $new)){
+            return redirect()->route('news.index');
+        }
 
         return view('news.edit', ['new' => $new]);
     }
@@ -68,6 +74,11 @@ class NewsController extends Controller
     public function update(NewsUpdateRequest $request, string $id)
     {
         $new = Notice::find($id);
+
+        if( Gate::denies('belongs-to', $new)){
+            return redirect()->route('news.index');
+        }
+
         $new->update($request->only(['title','description','content']));
 
         return redirect()->route('news.index')->with('status_success', __('Successfully updated'));
@@ -79,7 +90,13 @@ class NewsController extends Controller
      */
     public function destroy(string $id)
     {
-        Notice::find($id)->delete();
+        $new = Notice::find($id);
+
+        if( Gate::denies('belongs-to', $new)){
+            return redirect()->route('news.index');
+        }
+
+        $new->delete();
 
         return redirect()->route('news.index')->with('status_danger', __('Deleted New.'));
     }

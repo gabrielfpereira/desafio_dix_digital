@@ -141,7 +141,7 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <li @if ($pageSlug == 'icons') class="active " @endif>
+                                <li>
                                     <a href="{{ route('news.index') }}">
                                         <i class="tim-icons icon-single-copy-04"></i>
                                         <p>{{ _('News') }}</p>
@@ -381,7 +381,7 @@
 
       <div class="form-group">
         <label>Confirm Password</label>
-        <input type="password" name="password_confirmation" class="form-control" placeholder="{{ __('Confirm New Password') }}" value="" required>
+        <input type="password" name="password_confirmation" class="form-control" placeholder="{{ __('Confirm New Password') }}" value="">
     </div>
       
 

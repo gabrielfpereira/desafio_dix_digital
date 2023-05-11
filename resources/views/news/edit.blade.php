@@ -33,7 +33,7 @@
 
                         <div class="form-group{{ $errors->has('content') ? ' has-danger' : '' }}">
                             <label>{{ _('Content') }}</label>
-                            <textarea name="content" id="content" cols="57" rows="10"  class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" placeholder="{{ _('Content') }}">{{ $new->content }}</textarea>
+                            <textarea name="content" id="content" cols="57" rows="50"  class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" placeholder="{{ _('Content') }}">{{ $new->content }}</textarea>
                             @include('alerts.feedback', ['field' => 'content'])
                         </div>
                 </div>
