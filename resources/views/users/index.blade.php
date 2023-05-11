@@ -129,12 +129,15 @@
                                                     <p>{{ _('User Profile') }}</p>
                                                 </a>
                                             </li>
-                                            <li class="active" >
-                                                <a href="{{ route('user.index')  }}">
-                                                    <i class="tim-icons icon-bullet-list-67"></i>
-                                                    <p>{{ _('User Management') }}</p>
-                                                </a>
-                                            </li>
+                                            @if('manage-users')
+                                                <li class="active" >
+                                                    <a href="{{ route('user.index')  }}">
+                                                        <i class="tim-icons icon-bullet-list-67"></i>
+                                                        <p>{{ _('User Management') }}</p>
+                                                    </a>
+                                                </li>
+                                                
+                                            @endcan
                                         </ul>
                                     </div>
                                 </li>
@@ -356,11 +359,12 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                             <a class="dropdown-item" href="{{ route('user.edit', $user->id) }} ">Edit</a>
-                                            <a class="dropdown-item" href="{{ route('user.delete', $user->id) }}">delete</a>
+                                            <a class="dropdown-item"  href="{{ route('user.delete', $user->id) }}">delete</a>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
+                            
                             @endforeach
                                                         </tbody>
                     </table>
@@ -377,7 +381,7 @@
         </div>
 
 
-<!-- Modal -->
+<!-- Modal Add User -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -423,7 +427,7 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary">Add User/button>
+    <button type="submit" class="btn btn-primary">Add User</button>
 </div>
 </form>
     </div>

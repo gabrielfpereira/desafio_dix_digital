@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\ManageUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,11 +23,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::prefix('/user')->group(function () {
+	Route::get('/', [UserController::class, 'index'])->name('user.index');
 	Route::post('/register', [UserController::class, 'store'])->name('user.register');
 	Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
 	Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
 	Route::put('/update/{id}', [UserController::class, 'update'])->name('user.manager.update');
-	Route::put('/password', [UserController::class, 'password'])->name('user.password');
+	Route::put('/password/{id}', [UserController::class, 'password'])->name('user.password');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -44,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+	//Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);

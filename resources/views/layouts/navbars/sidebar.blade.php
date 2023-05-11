@@ -26,12 +26,15 @@
                                 <p>{{ _('User Profile') }}</p>
                             </a>
                         </li>
+                        @can('manage-users')
+                            
                         <li @if ($pageSlug == 'users') class="active " @endif>
                             <a href="{{ route('user.index')  }}">
                                 <i class="tim-icons icon-bullet-list-67"></i>
                                 <p>{{ _('User Management') }}</p>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </div>
             </li>
