@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\ManageUsers;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,14 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::prefix('/new')->group(function () {
+	Route::get('/', [NewsController::class, 'index'])->name('news.index');
+	Route::post('/create', [NewsController::class, 'create'])->name('news.store');
+	Route::get('/delete/{id}', [NewsController::class, 'destroy'])->name('news.delete');
+	Route::get('/edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
+	Route::put('/update/{id}', [NewsController::class, 'update'])->name('news.update');
+});
 
 Route::prefix('/user')->group(function () {
 	Route::get('/', [UserController::class, 'index'])->name('user.index');

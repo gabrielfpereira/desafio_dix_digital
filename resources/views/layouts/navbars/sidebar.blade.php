@@ -44,6 +44,12 @@
                     <p>{{ _('Icons') }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'icons') class="active " @endif>
+                <a href="{{ route('news.index') }}">
+                    <i class="tim-icons icon-single-copy-04"></i>
+                    <p>{{ _('News') }}</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'maps') class="active " @endif>
                 <a href="{{ route('pages.maps') }}">
                     <i class="tim-icons icon-pin"></i>
